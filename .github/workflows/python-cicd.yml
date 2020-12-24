@@ -22,12 +22,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
       - name: 'Build and push image'
-        uses: docker/build-push-action@v2.2.1
+        uses: docker/build-push-action@v1
         with:
-          secret: ${{ secrets.GHCR_TOKEN }}
-          context: .
-          file: ./Dockerfile
-          platforms: linux/amd64 #linux/arm/v7,linux/arm64
-          push: true
-          tags:  ghcr.io/${{ github.actor }}/flask-mysql-k3s:v1
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_TOKEN }}
+          registry: ghcr.io
+          tags:  flask-mysql-k3s:v1
 
