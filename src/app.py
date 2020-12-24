@@ -1,13 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash,os
 from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.secret_key = "Secret Key"
-
+app.secret_key = "Trapezium!1"
 #SqlAlchemy Database Configuration With Mysql
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/crud'
+USER = os.getenv('DB_USER')
+PASSWORD = os.environ.get('DB_PASS')
+DB=os.environ.get('DB')
+HOST=os.environ.get('HOST')
+connectionstring="mysql://"+USER+":"+PASSWORD+"@"+HOST+"/"+DB
+app.config['SQLALCHEMY_DATABASE_URI'] = connectionstring
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 db = SQLAlchemy(app)
 
