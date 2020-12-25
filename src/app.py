@@ -5,12 +5,12 @@ import os
 
 app = Flask(__name__)
 app.secret_key = "Trapezium!1"
-#SqlAlchemy Database Configuration With Mysql
+# SqlAlchemy Database Configuration With Mysql
 USER = os.getenv('DB_USER')
 PASSWORD = os.environ.get('DB_PASS')
-DB=os.environ.get('DB')
-HOST=os.environ.get('HOST')
-connectionstring="mysql://"+USER+":"+PASSWORD+"@"+HOST+"/"+DB
+DB = os.environ.get('DB')
+HOST = os.environ.get('HOST')
+connectionstring = "mysql://"+USER+":"+PASSWORD+"@"+HOST+"/"+DB
 app.config['SQLALCHEMY_DATABASE_URI'] = connectionstring
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -18,7 +18,27 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-#Creating model table for our CRUD database
+def db_init(host, user, passwd, db):
+    """
+    Initialize the database by creating products table
+    """
+    global conn
+    try:
+        conn = db.connect(host=host, user=user, passwd=passwd, db=db)
+        cur = conn.cursor()
+        cur.execute("show tables like 'employees'")
+        if not cur.rowcount:
+            cur.execute("create table products(id INT(10) NOT NULL AUTO_INCREMENT, name VARCHAR(30) NOT NULL, email VARCHAR(30) NOT NULL,phone VARCHAR(30) NOT NULL, CONSTRAINT id_pk PRIMARY KEY (id))")
+            conn.commit()
+            conn.close()
+        else:
+            print("Database table already present")
+    except Exception as msg:
+        print("Exception while initializing database : %s" % msg)
+
+# Creating model table for our CRUD database
+
+
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -32,20 +52,21 @@ class Data(db.Model):
         self.phone = phone
 
 
-#This is the index route where we are going to
-#query on all our employee data
+# This is the index route where we are going to
+# query on all our employee data
 @app.route('/')
 def Index():
     all_data = Data.query.all()
 
     return render_template("index.html", employees=all_data)
 
+
 @app.route('/test')
 def pytest():
     return jsonify({'Site': 'Up'})
 
 
-#this route is for inserting data to mysql database via html forms
+# this route is for inserting data to mysql database via html forms
 @app.route('/insert', methods=['POST'])
 def insert():
 
@@ -64,7 +85,7 @@ def insert():
         return redirect(url_for('Index'))
 
 
-#this is our update route where we are going to update our employee
+# this is our update route where we are going to update our employee
 @app.route('/update', methods=['GET', 'POST'])
 def update():
 
@@ -81,7 +102,7 @@ def update():
         return redirect(url_for('Index'))
 
 
-#This route is for deleting our employee
+# This route is for deleting our employee
 @app.route('/delete/<id>/', methods=['GET', 'POST'])
 def delete(id):
     my_data = Data.query.get(id)
@@ -93,4 +114,5 @@ def delete(id):
 
 
 if __name__ == "__main__":
+    db_init(host=HOST, user=USER, passwd=PASSWORD, db=DB)
     app.run(debug=True)
