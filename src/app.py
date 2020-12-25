@@ -18,13 +18,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-def db_init(host, user, passwd, db):
+def db_init():
     """
     Initialize the database by creating products table
     """
     global conn
     try:
-        conn = db.connect(host=host, user=user, passwd=passwd, db=db)
+        conn = db.connect(connectionstring)
         cur = conn.cursor()
         cur.execute("show tables like 'employees'")
         if not cur.rowcount:
@@ -114,5 +114,5 @@ def delete(id):
 
 
 if __name__ == "__main__":
-    db_init(host=HOST, user=USER, passwd=PASSWORD, db=DB)
+    db_init()
     app.run(debug=True)
