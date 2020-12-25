@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -39,6 +39,10 @@ def Index():
     all_data = Data.query.all()
 
     return render_template("index.html", employees=all_data)
+
+@app.route('/test')
+def pytest():
+    return jsonify({'Site': 'Up'})
 
 
 #this route is for inserting data to mysql database via html forms
