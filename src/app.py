@@ -14,27 +14,7 @@ connectionstring = "mysql://"+USER+":"+PASSWORD+"@"+HOST+"/"+DB
 app.config['SQLALCHEMY_DATABASE_URI'] = connectionstring
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
 db = SQLAlchemy(app)
-
-
-def db_init():
-    """
-    Initialize the database by creating products table
-    """
-    global conn
-    try:
-        conn = db.connect(connectionstring)
-        cur = conn.cursor()
-        cur.execute("show tables like 'employees'")
-        if not cur.rowcount:
-            cur.execute("create table products(id INT(10) NOT NULL AUTO_INCREMENT, name VARCHAR(30) NOT NULL, email VARCHAR(30) NOT NULL,phone VARCHAR(30) NOT NULL, CONSTRAINT id_pk PRIMARY KEY (id))")
-            conn.commit()
-            conn.close()
-        else:
-            print("Database table already present")
-    except Exception as msg:
-        print("Exception while initializing database : %s" % msg)
 
 # Creating model table for our CRUD database
 
@@ -114,5 +94,5 @@ def delete(id):
 
 
 if __name__ == "__main__":
-    db_init()
+    db.create_all()
     app.run(debug=True)
