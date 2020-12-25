@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: flaskapi-service
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
   - name: flaskapi
     port: 8080
