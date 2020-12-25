@@ -36,4 +36,9 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: mysql-secrets
-                  key: DB 
+                  key: DB
+            - name: HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: HOST
