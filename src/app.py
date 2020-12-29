@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 app.secret_key = "Trapezium!1"
-# SqlAlchemy Database Configuration With Mysql
+# SqlAlchemy Database Configuration With Mysql 
 USER = os.getenv('DB_USER')
 PASSWORD = os.environ.get('DB_PASS')
 DB = os.environ.get('DB')
