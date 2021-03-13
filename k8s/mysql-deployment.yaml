@@ -5,6 +5,7 @@ metadata:
   name: mysql-pv-claim
   labels:
     app: mysql-flask
+  namespace: flask
 spec:
   accessModes:
     - ReadWriteOnce
@@ -18,6 +19,7 @@ metadata:
   name: mysql-deployment
   labels:
     app: mysql-flask
+  namespace: flask
 spec:
   replicas: 1
   selector:

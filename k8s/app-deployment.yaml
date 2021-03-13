@@ -5,6 +5,7 @@ metadata:
   name: flaskapi-deployment
   labels:
     app: flaskapi
+  namespace: flask
 spec:
   replicas: 1
   selector:
