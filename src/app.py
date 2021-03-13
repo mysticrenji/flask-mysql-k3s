@@ -18,6 +18,7 @@ app.config["MYSQL_DATABASE_PASSWORD"] = os.environ.get('DB_PASS')
 app.config["MYSQL_DATABASE_DB"] = os.environ.get('DB')
 app.config["MYSQL_DATABASE_HOST"] = os.getenv("MYSQL_SERVICE_HOST")
 app.config["MYSQL_DATABASE_PORT"] = os.getenv("MYSQL_SERVICE_PORT")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL')
 
 db = SQLAlchemy(app)
 
