@@ -6,7 +6,7 @@ metadata:
 
 spec:
   rules:
-    - host: flaskapp.southeastasia.cloudapp.azure.com
+    - host: flask-app.southeastasia.cloudapp.azure.com
       http:
         paths:
           - path: /crud

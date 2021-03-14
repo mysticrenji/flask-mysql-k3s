@@ -21,7 +21,7 @@ spec:
           image: ghcr.io/mysticrenji/flask-mysql-k3s:v1
           imagePullPolicy: Always
           ports:
-            - containerPort: 5000
+            - containerPort: 80
           env:
             - name: DB_USER
               valueFrom:

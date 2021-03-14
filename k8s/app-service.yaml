@@ -9,6 +9,6 @@ spec:
   - name: flaskapi
     port: 80
     protocol: TCP
-    targetPort: 5000
+    targetPort: 80
   selector:
     app: flaskapi
