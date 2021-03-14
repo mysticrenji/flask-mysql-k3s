@@ -1,27 +1,15 @@
-apiVersion: networking.k8s.io/v1
 kind: Ingress
+apiVersion: extensions/v1beta1
 metadata:
-  name: flaskapi-ingress
-  annotations:
-    kubernetes.io/ingress.class: "traefik"
-   # certmanager.k8s.io/issuer: "letsencrypt-prod"
-   # certmanager.k8s.io/acme-challenge-type: http01
+  name: flaskapp-service
+  namespace: flask
 
 spec:
- # tls:
- # - hosts:
-    # Change this to your own hostname
-   # - k3s-cluster.eastus2.cloudapp.azure.com
-   # secretName: letsencrypt-prod
   rules:
-  # Change this to your own hostname
-  - host: k3s-cluster.eastus2.cloudapp.azure.com
-    http:
-      paths:
-      - pathType: Prefix
-        path: /crud
-        backend:
-          service:
-            name: flaskapi-service
-            port:
-              number: 8080
+    - host: flaskapp.southeastasia.cloudapp.azure.com
+      http:
+        paths:
+          - path: /crud
+            backend:
+              serviceName: flaskapi-service
+              servicePort: 80

@@ -2,12 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: flaskapi-service
-  name: flask
+  namespace: flask
 spec:
   type: LoadBalancer
   ports:
   - name: flaskapi
-    port: 8080
+    port: 80
     protocol: TCP
     targetPort: 5000
   selector:
