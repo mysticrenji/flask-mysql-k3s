@@ -7,7 +7,7 @@ RUN apt-get update \
 RUN mkdir /code
 COPY src /code
 WORKDIR /code
-EXPOSE 5000
+EXPOSE 80
 ENTRYPOINT ["python", "app.py"]
 
 
