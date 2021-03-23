@@ -30,10 +30,12 @@ spec:
 
  stages {
    stage('Build Docker image') {
+      steps {
       container('docker') {
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
         sh "docker build -t ${IMAGE} ."
       }
    }
+ }
  }
  }
