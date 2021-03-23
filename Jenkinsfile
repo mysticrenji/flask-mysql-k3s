@@ -23,6 +23,7 @@ spec:
     githubtoken= 'GitHub'
     stage('Build Docker image') {
       container('docker') {
+        git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
         sh "docker build -t ${image} ."
       }
     }
