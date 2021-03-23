@@ -43,7 +43,7 @@ spec:
       steps {
       container('docker') {
         sh "export CR_PAT=${TOKEN}"
-        sh "docker login ghcr.io -u ${OWNER} --password-stdin"
+        sh "echo $CR_PAT | docker login ghcr.io -u ${OWNER} --password-stdin"
         sh "docker push ${IMAGE}:latest"
         }
       }
