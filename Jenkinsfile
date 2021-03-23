@@ -40,8 +40,9 @@ spec:
   stage('Push Docker image') {
       steps {
       container('docker') {
-        sh('export CR_PAT=$TOKEN_PSW')
-        sh('echo $CR_PAT | docker login ghcr.io -u $TOKEN_USR --password-stdin')
+        //sh('export CR_PAT=$TOKEN_PSW')
+        //sh('echo $CR_PAT | docker login ghcr.io -u $TOKEN_USR --password-stdin')
+        sh('docker login -u $TOKEN_USR -p $TOKEN_PSW $GITHUBCR')
         sh "docker push ${IMAGE}:latest"
         }
       }
