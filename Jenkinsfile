@@ -34,15 +34,15 @@ spec:
       steps {
       container('docker') {
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
-        sh "docker build -t ${IMAGE} ."
+        sh "docker build -t ${IMAGE}:latest ."
       }
    }
  }
   stage('Push Docker image') {
       steps {
       container('docker') {
-        docker.withRegistry(${GITHUBCR}, ${TOKEN}) {
-        docker.build('${IMAGE}').push('latest')
+        docker.withRegistry("${GITHUBCR}", "${TOKEN}") {
+        docker.build("${IMAGE}").push('latest')
         }
       }
    }
