@@ -1,9 +1,10 @@
 pipeline {
   environment {
     JENKINS_CRED = "${PROJECT}"
-    IMAGE = "ghcr.io/mysticrenji/python-flask"
+    IMAGE = 'ghcr.io/mysticrenji/python-flask'
     TOKEN= 'GitHub'
-    GITHUBCR="ghcr.io"
+    GITHUBCR='ghcr.io'
+    DOCKERIMAGE = ''
   }
   agent {
     kubernetes {
@@ -34,15 +35,16 @@ spec:
       steps {
       container('docker') {
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
-        sh "docker build -t ${IMAGE}:latest ."
+        DOCKERIMAGE = docker.build IMAGE
+        //sh "docker build -t ${IMAGE}:latest ."
       }
    }
  }
   stage('Push Docker image') {
       steps {
       container('docker') {
-        docker.withRegistry('${GITHUBCR}', '${TOKEN}') {
-        docker.build('${IMAGE}').push('latest')
+        docker.withRegistry(GITHUBCR, GitHub) {
+        docker.build(DOCKERIMAGE).push('latest')
         }
       }
    }
