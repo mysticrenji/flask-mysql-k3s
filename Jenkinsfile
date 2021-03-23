@@ -29,23 +29,16 @@ spec:
   }
 
  stages {
-   stage('Build Docker image') {
+   stage('Build Docker image and Push to Container Registry') {
       steps {
       container('docker') {
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
-        sh "docker build -t ${IMAGE}:v1 ."
+        sh ('docker login -u $TOKEN_USR -p $TOKEN_PSW $GITHUBCR')
+        sh ('docker build -t $IMAGE:latest .')
+        sh ('docker push ${IMAGE}:latest')
       }
    }
  }
-  stage('Push Docker image') {
-      steps {
-      container('docker') {
-        //sh('export CR_PAT=$TOKEN_PSW')
-        //sh('echo $CR_PAT | docker login ghcr.io -u $TOKEN_USR --password-stdin')
-        sh ('docker login -u $TOKEN_USR -p $TOKEN_PSW $GITHUBCR')
-        sh "docker push ${IMAGE}:latest"
-        }
-      }
-   }
+
  }
  }
