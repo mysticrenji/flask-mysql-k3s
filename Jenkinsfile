@@ -1,10 +1,8 @@
 pipeline {
   environment {
-    JENKINS_CRED = "${PROJECT}"
     IMAGE = "ghcr.io/mysticrenji/python-flask"
-    TOKEN= credentials('CRPAT')
+    TOKEN= credentials('GitHub')
     GITHUBCR="ghcr.io"
-    OWNER = "mysticrenji"
   }
   agent {
     kubernetes {
@@ -42,8 +40,8 @@ spec:
   stage('Push Docker image') {
       steps {
       container('docker') {
-        sh "export CR_PAT=${TOKEN}"
-        sh "echo $CR_PAT | docker login ghcr.io -u ${OWNER} --password-stdin"
+        sh('export CR_PAT=$TOKEN_PSW')
+        sh('echo $CR_PAT | docker login ghcr.io -u $TOKEN_USR --password-stdin')
         sh "docker push ${IMAGE}:latest"
         }
       }
