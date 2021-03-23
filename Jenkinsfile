@@ -41,8 +41,8 @@ spec:
   stage('Push Docker image') {
       steps {
       container('docker') {
-        docker.withRegistry("${GITHUBCR}", "${TOKEN}") {
-        docker.build("${IMAGE}").push('latest')
+        docker.withRegistry('${GITHUBCR}', '${TOKEN}') {
+        docker.build('${IMAGE}').push('latest')
         }
       }
    }
