@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    IMAGE = "ghcr.io/mysticrenji/python-flask"
+    IMAGE = "ghcr.io/mysticrenji/flask-mysql-k3s"
     TOKEN= credentials('GitHub')
     GITHUBCR="ghcr.io"
   }
@@ -33,7 +33,7 @@ spec:
       steps {
       container('docker') {
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
-        sh "docker build -t ${IMAGE}:latest ."
+        sh "docker build -t ${IMAGE}:v1 ."
       }
    }
  }
