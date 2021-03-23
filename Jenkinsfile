@@ -29,6 +29,16 @@ spec:
   }
 
  stages {
+   stage('Cleanup'){
+    steps{
+      container('docker') {
+        sh '''
+        docker rmi $(docker images -f 'dangling=true' -q) || true
+        docker rmi $(docker images | sed 1,2d | awk '{print $3}') || true
+        '''
+      }
+    }
+   }
    stage('Build Docker image and Push to Container Registry') {
       steps {
       container('docker') {
