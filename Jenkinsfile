@@ -2,7 +2,7 @@ pipeline {
   environment {
     JENKINS_CRED = "${PROJECT}"
     IMAGE = "ghcr.io/mysticrenji/python-flask"
-    TOKEN= 'CRPAT'
+    TOKEN= credentials('CRPAT')
     GITHUBCR="ghcr.io"
     OWNER = "mysticrenji"
   }
