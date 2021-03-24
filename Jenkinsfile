@@ -2,7 +2,6 @@ pipeline {
   environment {
     IMAGE = "ghcr.io/mysticrenji/flask-mysql-k3s"
     GITHUBCR="ghcr.io"
-    USER="mysticrenji"
   }
   agent {
     kubernetes {
