@@ -36,8 +36,7 @@ spec:
         {
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
         sh '''
-        export CR_PAT=$PASSWORD
-        echo $CR_PAT | docker login $GITHUBCR -u $USERNAME --password-stdin
+        docker login $GITHUBCR -u $USERNAME -p $PASSWORD
         docker build -t $IMAGE:latest .
         docker push ${IMAGE}:latest
            '''
