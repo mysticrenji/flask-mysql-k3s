@@ -3,6 +3,7 @@ pipeline {
     IMAGE = "ghcr.io/mysticrenji/flask-mysql-k3s"
     TOKEN= credentials('CRPAT')
     GITHUBCR="ghcr.io"
+    USER="mysticrenji"
   }
   agent {
     kubernetes {
@@ -34,7 +35,7 @@ spec:
       container('docker') {
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
         sh ('export CR_PAT=$TOKEN')
-        sh ('echo $CR_PAT | docker login ghcr.io -u $TOKEN_USR --password-stdin')
+        sh ('echo $CR_PAT | docker login $GITHUBCR -u $USER --password-stdin')
         //sh "docker login -u '$TOKEN_USR' -p '$TOKEN_PSW' ${GITHUBCR}"
         sh ('docker build -t $IMAGE:latest .')
         sh ('docker push ${IMAGE}:latest')
