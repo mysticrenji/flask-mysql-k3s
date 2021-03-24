@@ -40,7 +40,7 @@ spec:
         echo $CR_PAT | docker login $GITHUBCR -u $USERNAME --password-stdin
         docker build -t $IMAGE:latest .
         docker push ${IMAGE}:latest
-        '''
+           '''
         }
       }
    }
