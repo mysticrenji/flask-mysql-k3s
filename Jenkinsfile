@@ -37,6 +37,14 @@ spec:
   }
 
  stages {
+    stage('Clean up') {
+      steps {
+      container('docker') {
+        sh "docker images --filter "dangling=true"
+      }
+      }
+    }
+        
    stage('Build Docker image and Push to Container Registry') {
       steps {
       container('docker') {
