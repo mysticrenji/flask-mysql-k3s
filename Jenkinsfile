@@ -1,7 +1,7 @@
 pipeline {
   environment {
     IMAGE = "ghcr.io/mysticrenji/flask-mysql-k3s"
-    TOKEN= credentials('GitHub')
+    TOKEN= credentials('CRPAT')
     GITHUBCR="ghcr.io"
   }
   agent {
@@ -33,8 +33,8 @@ spec:
       steps {
       container('docker') {
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
-        sh ('export CR_PAT=$TOKEN_PSW')
-        sh('echo $CR_PAT | docker login ghcr.io -u $TOKEN_USR --password-stdin')
+        sh ('export CR_PAT=$TOKEN')
+        sh ('echo $CR_PAT | docker login ghcr.io -u $TOKEN_USR --password-stdin')
         //sh "docker login -u '$TOKEN_USR' -p '$TOKEN_PSW' ${GITHUBCR}"
         sh ('docker build -t $IMAGE:latest .')
         sh ('docker push ${IMAGE}:latest')
