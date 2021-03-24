@@ -54,9 +54,9 @@ spec:
    }
  }
    stage('Deploy via Helm'){
-     when {
+/*     when {
        environment name: 'DEPLOY', value: 'true'
-     }
+     }*/
      steps {
        container('helm') {
          sh "helm upgrade --install --force --set name=${NAME} --set image.tag=${VERSION} ${NAME} ./charts"
