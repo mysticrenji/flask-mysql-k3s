@@ -37,7 +37,7 @@ spec:
   }
 
  stages {
-    stage('Clean up') {
+   /* stage('Clean up') {
       steps {
       container('docker') {
         sh '''
@@ -45,7 +45,7 @@ spec:
         '''
       }
       }
-    }
+    }*/
         
    stage('Build Docker image and Push to Container Registry') {
       steps {
