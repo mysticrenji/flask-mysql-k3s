@@ -46,8 +46,8 @@ spec:
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
         sh '''
         docker login -u $USERNAME -p $PASSWORD $GITHUBCR 
-        docker build -t $IMAGE:=${VERSION} .
-        docker push ${IMAGE}:=${VERSION} 
+        docker build -t $IMAGE:${VERSION} .
+        docker push ${IMAGE}:${VERSION} 
            '''
         }
       }
