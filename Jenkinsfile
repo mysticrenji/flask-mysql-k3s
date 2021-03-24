@@ -3,6 +3,8 @@ pipeline {
     IMAGE = "ghcr.io/mysticrenji/flask-mysql-k3s"
     GITHUBCR="ghcr.io"
     DEPLOY = "${env.BRANCH_NAME == "main" || env.BRANCH_NAME == "develop" ? "true" : "false"}"
+    NAME = "flask"
+    VERSION="latest"
 
   }
   agent {
@@ -44,8 +46,8 @@ spec:
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
         sh '''
         docker login -u $USERNAME -p $PASSWORD $GITHUBCR 
-        docker build -t $IMAGE:latest .
-        docker push ${IMAGE}:latest
+        docker build -t $IMAGE:=${VERSION} .
+        docker push ${IMAGE}:=${VERSION} 
            '''
         }
       }
@@ -57,7 +59,7 @@ spec:
      }
      steps {
        container('helm') {
-         sh "helm upgrade --install --force --set name=${NAME} --set image.tag=${VERSION} --set domain=${DOMAIN} ${NAME} ./charts"
+         sh "helm upgrade --install --force --set name=${NAME} --set image.tag=${VERSION} ${NAME} ./charts"
        }
      }
    }
