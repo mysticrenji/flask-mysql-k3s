@@ -1,7 +1,6 @@
 pipeline {
   environment {
     IMAGE = "ghcr.io/mysticrenji/flask-mysql-k3s"
-    TOKEN= credentials('CRPAT')
     GITHUBCR="ghcr.io"
     USER="mysticrenji"
   }
@@ -33,12 +32,16 @@ spec:
    stage('Build Docker image and Push to Container Registry') {
       steps {
       container('docker') {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'CRPAT',
+        usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])
+        {
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
-        sh ('export CR_PAT=$TOKEN')
-        sh ('echo $CR_PAT | docker login $GITHUBCR -u $USER --password-stdin')
+        sh ('export CR_PAT=$PASSWORD')
+        sh ('echo $CR_PAT | docker login $GITHUBCR -u $USERNAME --password-stdin')
         //sh "docker login -u '$TOKEN_USR' -p '$TOKEN_PSW' ${GITHUBCR}"
         sh ('docker build -t $IMAGE:latest .')
         sh ('docker push ${IMAGE}:latest')
+        }
       }
    }
  }
