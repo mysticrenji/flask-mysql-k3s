@@ -4,7 +4,7 @@ pipeline {
     GITHUBCR="ghcr.io"
     DEPLOY = "${env.BRANCH_NAME == "main" || env.BRANCH_NAME == "develop" ? "true" : "false"}"
     NAME = "flask"
-    VERSION="latest"
+    VERSION = "latest"
 
   }
   agent {
