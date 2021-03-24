@@ -2,6 +2,8 @@ pipeline {
   environment {
     IMAGE = "ghcr.io/mysticrenji/flask-mysql-k3s"
     GITHUBCR="ghcr.io"
+    DEPLOY = "${env.BRANCH_NAME == "main" || env.BRANCH_NAME == "develop" ? "true" : "false"}"
+
   }
   agent {
     kubernetes {
@@ -19,6 +21,11 @@ spec:
     volumeMounts:
     - name: dockersock
       mountPath: /var/run/docker.sock
+  - name: helm
+    image: lachlanevenson/k8s-helm:v3.5.2
+    command:
+      - cat
+    tty: true
   volumes:
   - name: dockersock
     hostPath:
@@ -44,6 +51,18 @@ spec:
       }
    }
  }
+   stage('Deploy via Helm'){
+     when {
+       environment name: 'DEPLOY', value: 'true'
+     }
+     steps {
+       container('helm') {
+         sh "helm upgrade --install --force --set name=${NAME} --set image.tag=${VERSION} --set domain=${DOMAIN} ${NAME} ./charts"
+       }
+     }
+   }
+
+     
 
  }
  }
