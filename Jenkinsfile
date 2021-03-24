@@ -40,7 +40,7 @@ spec:
     stage('Clean up') {
       steps {
       container('docker') {
-        sh "docker images --filter "dangling=true" "
+        sh "docker rmi $(docker images -f "dangling=true" -q)"
       }
       }
     }
