@@ -69,7 +69,7 @@ spec:
      }*/
      steps {
        container('helm') {
-         sh "helm upgrade --install --force -n ${NAME} --set name=${NAME} --set image.tag=${VERSION} ${NAME} --values ./charts/values.yaml"
+         sh "helm upgrade --install ${NAME} https://github.com/mysticrenji/flask-mysql-k3s/tree/main/charts  --namespace ${NAME} --set image.repository=${IMAGE} --set image.tag=${VERSION} --values https://github.com/mysticrenji/flask-mysql-k3s/tree/main/charts/values.yaml"
        }
      }
    }
