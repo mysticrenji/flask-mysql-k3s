@@ -77,7 +77,7 @@ spec:
    stage('Ansible Test'){
 
      steps {
-       sshagent(['Ansible]) {
+     sshagent(['Ansible']) {
         sh '''
            ssh -o StrictHostKeyChecking=no -l azureuser 13.67.118.253 uname -a
            '''
