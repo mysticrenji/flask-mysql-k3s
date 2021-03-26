@@ -69,7 +69,7 @@ spec:
      }*/
      steps {
        container('helm') {
-         sh "helm upgrade --install --force -n ${NAME} --set name=${NAME} --set image.tag=${VERSION} ${NAME} ./charts"
+         sh "helm upgrade --install --force -n ${NAME} --set name=${NAME} --set image.tag=${VERSION} ${NAME} --values ./charts/values.yaml"
        }
      }
    }
