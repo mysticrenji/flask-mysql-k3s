@@ -36,15 +36,15 @@ spec:
    stage('Terraform') {
       steps {
       container('docker') {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'GitHub',
-        usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])
-        {
+        //withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'GitHub',
+       // usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])
+       // {
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
         sh '''
         cd terraform
         
            '''
-        }
+      //  }
       }
    }
  }
