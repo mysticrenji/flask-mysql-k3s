@@ -24,6 +24,11 @@ terraform {
   }
 }
 
+provider "azurerm" {
+    version = "~>2.0"
+    features {}
+}
+
 #Terraform State Storage
 terraform {
   backend "s3" {
