@@ -1,6 +1,8 @@
 pipeline {
   environment {
     DEPLOY = "${env.BRANCH_NAME == "main" || env.BRANCH_NAME == "develop" ? "true" : "false"}"
+    final def IS_MASTER_BUILD = env.BRANCH_NAME == 'main'
+
   }
   agent {
     kubernetes {
@@ -19,7 +21,7 @@ spec:
     - name: dockersock
       mountPath: /var/run/docker.sock
   - name: terraform
-    image: hashicorp/terraform
+    image: iac-env:latest
     command:
       - cat
     tty: true
@@ -47,13 +49,25 @@ spec:
         git url: "https://github.com/mysticrenji/flask-mysql-k3s.git",  branch: 'main'
         sh '''
         cd terraform
-        terraform init
-        terraform plan
+        terraform fmt -check -recursive -list=true -diff
+        tflint
+        terraform init -input=false
+        terraform plan -out=tfplan -input=false
+        terraform validate
+        terraform graph | dot -Tpng > terraform-graph.png
+        archiveArtifacts artifacts: 'terraform-graph.png'
            '''
        }
       }
    }
  }
+    stage("Publish Approval") {
+            when { expression { IS_MASTER_BUILD } }
+
+            steps {
+                input message: "Deploy these changes?"
+            }
+        }
     stage('Ansible Test'){
      steps {
      sshagent(['Ansible']) {
