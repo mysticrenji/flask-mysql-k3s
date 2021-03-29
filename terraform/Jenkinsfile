@@ -1,7 +1,6 @@
 pipeline {
   environment {
     DEPLOY = "${env.BRANCH_NAME == "main" || env.BRANCH_NAME == "develop" ? "true" : "false"}"
-    final def IS_MASTER_BUILD = env.BRANCH_NAME == 'main'
 
   }
   agent {
@@ -62,7 +61,7 @@ spec:
    }
  }
     stage("Publish Approval") {
-            when { expression { IS_MASTER_BUILD } }
+            when { expression { DEPLOY } }
 
             steps {
                 input message: "Deploy these changes?"
