@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  python-flask-mysql:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-07-04T13:25:34.356575441Z"
+    description: A Helm chart for Kubernetes
+    digest: 5ea3c1f1795e9ac9d5e294257055476605df4247ed6086b5e632336ed5c46be4
+    name: python-flask-mysql
+    type: application
+    urls:
+    - https://mysticrenji.github.io/flask-mysql-k3s/charts/flask/python-flask-mysql-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-07-04T13:25:34.356034607Z"
