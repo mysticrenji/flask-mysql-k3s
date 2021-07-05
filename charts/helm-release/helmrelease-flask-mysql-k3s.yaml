@@ -11,8 +11,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: flask-mysql-k3s
-    values:
-      hostName: app.dev-iots.in
   install: {}
   interval: 5m0s
   releaseName: flask
