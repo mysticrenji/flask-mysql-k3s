@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: flask-mysql-k3s
+  namespace: flux-system
+spec:
+  interval: 1ms
+  url: https://mysticrenji.github.io/flask-mysql-k3s/charts/flask/
+
