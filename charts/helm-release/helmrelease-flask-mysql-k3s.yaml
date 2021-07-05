@@ -16,5 +16,5 @@ spec:
   install: {}
   interval: 5m0s
   releaseName: flask
-  targetNamespace: default
+  targetNamespace: flux-system
 
