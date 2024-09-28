@@ -1,4 +1,4 @@
-FROM python:3.13.0b2-slim
+FROM python:3.13.0rc2-slim
 LABEL org.opencontainers.image.source https://github.com/mysticrenji/flask-mysql-k3s
 COPY src/requirements.txt .
 RUN apt-get update \
